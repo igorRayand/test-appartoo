@@ -1,0 +1,109 @@
+<div class="w-50 m-auto">
+    <!-- Pills navs -->
+    <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+        <li class="nav-item" role="presentation">
+            <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
+                aria-controls="pills-login" aria-selected="true">Login</a>
+        </li>
+        <li class="nav-item" role="presentation">
+            <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab"
+                aria-controls="pills-register" aria-selected="false">Register</a>
+        </li>
+    </ul>
+    <!-- Pills navs -->
+    
+    <div class="toast " id="offset-toast" role="alert" aria-live="assertive" aria-atomic="true" data-autohide="true"
+        data-offset="...">
+        <div class="toast-header">
+            <strong class="mr-auto">Error</strong>
+            <small>11 mins ago</small>
+            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">×</span>
+            </button>
+        </div>
+        <div class="toast-body">
+            {{signUpError}}
+        </div>
+    </div>
+
+    <!-- Pills content -->
+    <div class="tab-content">
+        <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+            <form [formGroup]="signInForm" (ngSubmit)="signIn()">
+                <div class="text-center mb-3">
+                    <h2>Sign in</h2>
+                </div>
+    
+                <!-- Email input -->
+                <div class="mb-4">
+                    <label class="form-label" for="loginName">Login</label>
+                    <input formControlName="login" type="email" id="loginName" class="form-control" />
+                </div>
+    
+                <!-- Password input -->
+                <div class="mb-4">
+                    <label class="form-label" for="loginPassword">Password</label>
+                    <input formControlName="password" type="password" id="loginPassword" class="form-control" />
+                </div>
+                <p *ngIf="signInError" class="bg-danger rounded-1 text-white fw-bold p-2"><i class="fa-solid fa-circle-exclamation"></i> {{signInError}}</p>
+                <!-- Submit button -->
+                <button [disabled]="!signInForm.valid" type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+    
+                <!-- Register buttons -->
+                <div class="text-center">
+                    <p>Not a member? <a id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab"
+                aria-controls="pills-register" aria-selected="false">Register</a></p>
+                </div>
+            </form>
+        </div>
+        <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+            <form [formGroup]="signUpForm" (ngSubmit)="signUp()">
+                <div class="text-center mb-3">
+                    <h2>Sign up</h2>
+                </div>
+                <!-- Name input -->
+                <div class="mb-4">
+                    <label class="form-label" for="registerName">Login</label>
+                    <input formControlName="login" type="text" id="registerName" class="form-control" />
+                </div>
+    
+                <!-- Password input -->
+                <div class="mb-4">
+                    <label class="form-label" for="registerPassword">Password</label>
+                    <input formControlName="password" type="password" id="registerPassword" class="form-control" />
+                </div>
+    
+                <!-- Repeat Password input -->
+                <div class="mb-4">
+                    <label class="form-label" for="registerRepeatPassword">Repeat password</label>
+                    <input formControlName="repeatedPassword" type="password" id="registerRepeatPassword" class="form-control" />
+                </div>
+
+                <!-- Email input -->
+                <div class=" mb-4">
+                    <label class="form-label" for="registerEmail">Role</label>
+                    <select formControlName="role" class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+                        <option value="Guerrier" selected>Guerrier</option>
+                        <option value="Alchimiste">Alchimiste</option>
+                        <option value="Sorcier">Sorcier</option>
+                        <option value="Espions">Espions</option>
+                        <option value="Enchanteur">Enchanteur</option>
+                    </select>
+                </div>
+    
+                <!-- Checkbox -->
+                <div class="form-check d-flex justify-content-center mb-4">
+                    <input formControlName="agree" class="form-check-input me-2" type="checkbox" value="" id="registerCheck" checked
+                        aria-describedby="registerCheckHelpText" />
+                    <label class="form-check-label" for="registerCheck">
+                        I have read and agree to the terms
+                    </label>
+                </div>
+                <p *ngIf="signUpError" class="bg-danger rounded-1 text-white fw-bold p-2"><i  class="fa-solid fa-circle-exclamation"></i> {{signUpError}}</p>
+                <!-- Submit button -->
+                <button type="submit" [disabled]="!signUpForm.valid" class="btn btn-primary btn-block mb-3">Sign in</button>
+            </form>
+        </div>
+    </div>
+    <!-- Pills content -->
+</div>

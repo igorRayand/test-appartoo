@@ -1,0 +1,96 @@
+<div class="">
+    <div class="d-flex m-auto pt-4">
+        <div class="dropdown mx-auto">
+            <a class="d-flex align-items-center hidden-arrow">
+                <img [src]="generateAvatar(monster.login)" class="rounded-circle" height="80"
+                    alt="Black and White Portrait of a Man" loading="lazy" />
+            </a>
+        </div>
+    </div>
+    <div class="text-center m-auto py-2">
+        <h3 class="fw-bold">{{monster.login}}</h3>
+        <div class="d-flex w-25 m-auto mb-3">
+            <select *ngIf="!changeRoleLoading" [value]="role" (change)="changeRole($event)" class="form-select forms-select-xs"
+                aria-label=".form-select-lg example">
+                <option value="Guerrier">Guerrier</option>
+                <option value="Alchimiste">Alchimiste</option>
+                <option value="Sorcier">Sorcier</option>
+                <option value="Espions">Espions</option>
+                <option value="Enchanteur">Enchanteur</option>
+            </select>
+            <div *ngIf="changeRoleLoading" class="spinner-border mx-auto" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        <span *ngFor="let friend of monster.friends" class="badge text-bg-primary mx-1">{{friend.login}}</span>
+    </div>
+</div>
+<div class="position-absolute bottom-0 end-0 position-fixed">
+    <button type="button" (click)="logout()" class="btn btn-danger rounded-pill m-5"><i class="fas fa-power-off fs-5"></i></button>
+</div>
+<div *ngIf="monsters && !loading">
+    <h2 class="text-center my-5">Tous les monstres</h2>
+    <table class="table align-middle mb-0 mx-auto w-50 bg-white">
+        <thead class="bg-light sticky-top">
+            <tr>
+                <th>Login</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Nombre d'amis</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let row of monsters;index as i">
+                <td>
+                    <div class="d-flex align-items-center">
+                        <img [src]="generateAvatar(row.login)" alt="" style="width: 45px; height: 45px"
+                            class="rounded-circle" />
+                        <div class="ms-3">
+                            <p class="fw-bold mb-1">{{row.login}}</p>
+                            
+                        </div>
+                    </div>
+                </td>
+                <td>
+                    <p class="text-muted mb-0">{{row.role}}</p>
+                </td>
+                <td>
+                    <p class="fw-normal mb-1">
+                        <span *ngIf="!isFriend(row._id)" class="badge bg-warning text-white mx-1">enemies</span>
+                        <span *ngIf="isFriend(row._id)" class="badge bg-success text-white mx-1">friend</span>
+                    </p>
+                </td>
+                <td><p class="fw-normal mb-1">{{row.friends.length}}</p></td>
+                <td>
+                    <button *ngIf="!isFriend(row._id)" type="button" (click)="addFriend(row._id)" class="btn btn-primary btn-sm btn-rounded" [disabled]="loading">
+                        <span *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span> Ajouter
+                    </button>
+                    <button *ngIf="isFriend(row._id)" type="button" (click)="removeFriend(row._id)" class="btn btn-danger btn-sm btn-rounded" [disabled]="loading">
+                        <span *ngIf="loading" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+                         Supprimer
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div *ngIf="loading" class="d-flex justify-content-center mt-5 pt-5">
+    <div class="spinner-border" style="width: 4rem; height: 4rem;" role="status">
+        <span class="visually-hidden">Loading...</span>
+    </div>
+</div>
+<div *ngIf="!monsters && !loading" class="w-50 m-auto text-center">
+    <div class="bg-light">
+        <h1>Oops!</h1>
+        <h2>No Monster found</h2>
+        <div class="text-muted">
+            Sorry, you are the only one monster register!
+        </div>
+        <div class="mt-4">
+            <button type="button" class="btn btn-info btn-floating btn-lg">
+                <i class="fa-solid fa-rotate-right"></i>
+            </button>
+        </div>
+    </div>
+</div>

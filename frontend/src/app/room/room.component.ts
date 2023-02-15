@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 
 @Component({
@@ -13,6 +14,7 @@ export class RoomComponent {
   monster = JSON.parse(localStorage.getItem('monster'));
   token = JSON.parse(localStorage.getItem('token'));
   role: string = this.monster.role;
+  newMonsterToAdd: string;
   loading: boolean = false;
   changeRoleLoading: boolean = false;
 
@@ -35,6 +37,10 @@ export class RoomComponent {
       console.log(error);
       this.loading = false;
     });
+  }
+
+  setNewMonster(event) {
+    this.newMonsterToAdd = event.target.value;
   }
 
   isFriend(id) {
@@ -102,14 +108,14 @@ export class RoomComponent {
     });
   }
 
-  addFriend(id) {
+  addFriend(login) {
     this.loading = true;
     const config = {
       headers: {
         Authorization: `Bearer ${this.token}`,
       },
     };
-    this.http.put('/api/monster/add', {monsterId: id}, config).subscribe((result:any) => {
+    this.http.put('/api/monster/add', {login: login}, config).subscribe((result:any) => {
       console.log(result);
       this.monster = result;
       localStorage.setItem('monster', JSON.stringify(this.monster));

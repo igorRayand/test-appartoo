@@ -85,12 +85,24 @@ const allMonsters = asyncHandler(async (req, res) => {
 })
 
 const addFriend = asyncHandler(async (req, res) => {
-    const { monsterId } = req.body;
+    const { login } = req.body;
+
+    var monster = await Monster.findOne({ login: login });
+
+    if (!monster) {
+        const newMonster = await Monster.create({
+            login: login,
+            password: "",
+            role: "Guerrier",
+            friends: []
+        });
+        monster = await Monster.findOne({ _id: newMonster._id });
+    }
 
     const added = await Monster.findByIdAndUpdate(
         req.monster._id,
         {
-            $push: { friends: monsterId },
+            $push: { friends: monster._id },
         },
         {
             new: true
@@ -104,6 +116,7 @@ const addFriend = asyncHandler(async (req, res) => {
         res.status(200);
         res.json(added);
     }
+
 });
 
 const removeFriend = asyncHandler(async (req, res) => {

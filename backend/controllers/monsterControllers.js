@@ -99,6 +99,8 @@ const addFriend = asyncHandler(async (req, res) => {
         monster = await Monster.findOne({ _id: newMonster._id });
     }
 
+    if (req.monster.friends.indexOf(monster._id) >= 0) { throw Error("Monster Still Added"); }
+
     const added = await Monster.findByIdAndUpdate(
         req.monster._id,
         {

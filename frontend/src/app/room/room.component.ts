@@ -14,7 +14,7 @@ export class RoomComponent {
   monster = JSON.parse(localStorage.getItem('monster'));
   token = JSON.parse(localStorage.getItem('token'));
   role: string = this.monster.role;
-  newMonsterToAdd: string;
+  newMonsterToAdd: string = "";
   loading: boolean = false;
   changeRoleLoading: boolean = false;
 
@@ -119,6 +119,7 @@ export class RoomComponent {
       console.log(result);
       this.monster = result;
       localStorage.setItem('monster', JSON.stringify(this.monster));
+      this.ngOnInit();
       setTimeout(() => {
         this.loading = false;
       }, 300);

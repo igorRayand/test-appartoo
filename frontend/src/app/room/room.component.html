@@ -18,8 +18,8 @@
                 <option value="Espions">Espions</option>
                 <option value="Enchanteur">Enchanteur</option>
             </select>
-            <input type="text" [value]="newMonsterToAdd" class="form-control" (change)="setNewMonster($event)" placeholder="Saisir un nom de monstre..." />
-            <button class="btn btn-success" (click)="addFriend(newMonsterToAdd)">Ajouter</button>
+            <input *ngIf="!changeRoleLoading" type="text" [value]="newMonsterToAdd" class="form-control mx-2" (change)="setNewMonster($event)" placeholder="Saisir un nom de monstre..." />
+            <button *ngIf="!changeRoleLoading" class="btn btn-success" (click)="addFriend(newMonsterToAdd)">Ajouter</button>
             <div *ngIf="changeRoleLoading" class="spinner-border mx-auto" role="status">
                 <span class="visually-hidden">Loading...</span>
             </div>
